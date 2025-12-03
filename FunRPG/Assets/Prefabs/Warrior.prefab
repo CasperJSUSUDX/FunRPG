@@ -130,6 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::partol
   rb: {fileID: 4868106418203627606}
   tf: {fileID: 66123059201967910}
+  anmiator: {fileID: 1655078182035882109}
   speed: 10
 --- !u!65 &3656506556824563103
 BoxCollider:
