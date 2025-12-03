@@ -2,18 +2,21 @@ using UnityEngine;
 using UnityEditor.Animations;
 using UnityEngine.Rendering;
 
-public class Partol : MonoBehaviour
+public class Patrol : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Rigidbody rb;
     public Transform tf;
-    public Animator anmiator;
+    public Animator animator;
     public float speed = 10f;
-    private float[,] partolRange;
-    private int timer = 1000;
+    private float[,] patrolRange;
+    private int timer = 0;
     void Start()
     {
-        partolRange = new float[,] { {tf.position.x - 10f, tf.position.x + 10f}, {tf.position.z - 10f, tf.position.z + 10f} };
+        if (rb == null) rb = GetComponent<Rigidbody>();
+        if (tf == null) tf = GetComponent<Transform>();
+        if (animator == null) animator = GetComponent<Animator>();
+        patrolRange = new float[,] { {tf.position.x - 10f, tf.position.x + 10f}, {tf.position.z - 10f, tf.position.z + 10f} };
     }
 
     // Update is called once per frame
@@ -21,8 +24,8 @@ public class Partol : MonoBehaviour
     {
         timer -= 1;
         if (timer < 0 ||
-            (tf.position.x > partolRange[0, 1] && tf.position.x < partolRange[0, 0]) ||
-            (tf.position.z > partolRange[1, 1] && tf.position.z < partolRange[1, 0])
+            (tf.position.x > patrolRange[0, 1] && tf.position.x < patrolRange[0, 0]) ||
+            (tf.position.z > patrolRange[1, 1] && tf.position.z < patrolRange[1, 0])
         )
         {
             timer = 1000;
@@ -31,12 +34,12 @@ public class Partol : MonoBehaviour
             if (idle > 0.5f)
             {
                 rb.linearVelocity = new Vector3(Mathf.Cos(deg) * speed, 0, Mathf.Sin(deg) * speed);
-                anmiator.SetBool("haveSpeed", true);
+                animator.SetBool("haveSpeed", true);
             }
             else
             {
                 rb.linearVelocity = new Vector3(0, 0, 0);
-                anmiator.SetBool("haveSpeed", false);
+                animator.SetBool("haveSpeed", false);
             }
             
         }
